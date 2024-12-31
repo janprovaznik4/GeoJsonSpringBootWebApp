@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mappable Input Form</title>
+
+    <!--style>
+        .error {color:red}
+    </style-->
+</head>
+    <form th:action="@{/save}" th:object="${form}" method="POST">
+        <input type="text" th:field="*{name}" placeholder="name">
+        <input type="hidden" th:field="*{type}" />
+
+        <!-- Dropdown for BuildingType -->
+        <select th:if="${form.type == 'Building'}"
+                th:field="*{buildingType}">
+            <option th:each="entityType : ${T(org.example.geo_json_mvc.enums.BuildingType).values()}"
+                    th:value="${entityType}"
+                    th:text="${entityType}" />
+        </select>
+
+        <!-- Dropdown for UtilityType -->
+        <select th:if="${form.type == 'UtilityLine'}"
+                th:field="*{utilityType}">
+            <option th:each="entityType : ${T(org.example.geo_json_mvc.enums.UtilityType).values()}"
+                    th:value="${entityType}"
+                    th:text="${entityType}" />
+        </select>
+
+        <input type="submit" value="Submit">
+    </form>
+<body>
+
+</body>
+</html>

@@ -1,12 +1,17 @@
-package org.example;
+package org.example.geo_json_mvc.entities;
 
-enum BuildingType {GOVERNMENT, PUBLIC, PRIVATE;}
+import org.example.geo_json_mvc.dto.MappableFormPojo;
+import org.example.geo_json_mvc.enums.*;
 
 public class Building implements Mappable {
 
     private String name;
     private BuildingType type;
-    //add usage ->decision for marker
+
+    public Building(MappableFormPojo mappableForm) {
+        name = mappableForm.getName();
+        type = mappableForm.getBuildingType();
+    }
 
     public Building(String name, BuildingType type) {
         this.name = name;
@@ -14,12 +19,16 @@ public class Building implements Mappable {
     }
 
     @Override
-    public String getLabel() {
+    public String getName() {
         return name + " (" + type+ ")";
     }
 
+    public BuildingType getType() {
+        return type;
+    }
+
     @Override
-    public Geometry getGeometryType() {
+    public Geometry getShape() {
         return Geometry.POINT;
     }
 
@@ -30,5 +39,13 @@ public class Building implements Mappable {
             case PUBLIC -> Color.GREEN + " " + Marker.SQUARE;
             case PRIVATE ->  Color.BLUE + " " + Marker.PIN;
         };
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setType(BuildingType type) {
+        this.type = type;
     }
 }

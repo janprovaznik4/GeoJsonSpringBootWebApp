@@ -1,22 +1,20 @@
-package org.example;
+package org.example.geo_json_mvc.entities;
 
-enum Geometry {POINT, LINE, POLYGON}
-enum Marker {STAR, PIN, SQUARE, DOTTED, SOLID}
-enum Color {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE}
+import org.example.geo_json_mvc.enums.Geometry;
 
-interface Mappable {
+public interface Mappable {
 
     String JSON_PROPERTY = """
             "properties": {%s}
             """;
-    String getLabel();
-    Geometry getGeometryType();
+    String getName();
+    Geometry getShape();
     String getMarker();
 
     default String toJSON() {
         return """
                 "type": "%s", "label": "%s", "marker": "%s"
-                """.formatted(getGeometryType(), getLabel(), getMarker());
+                """.formatted(getShape(), getName(), getMarker());
     }
 
     static void printProperties(Mappable mappable) {

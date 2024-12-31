@@ -1,4 +1,8 @@
-package org.example;
+package org.example.geo_json_mvc;
+
+import org.example.geo_json_mvc.entities.*;
+import org.example.geo_json_mvc.enums.BuildingType;
+import org.example.geo_json_mvc.enums.UtilityType;
 
 public class Main {
     public static void main(String[] args) {
