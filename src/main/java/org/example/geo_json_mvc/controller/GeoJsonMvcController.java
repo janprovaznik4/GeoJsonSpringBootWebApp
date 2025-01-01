@@ -55,4 +55,11 @@ public class GeoJsonMvcController {
             throw new IllegalArgumentException("Unknown mappable type: " + mappableForm.getType());
         return "redirect:/";
     }
+
+    @GetMapping("/delete")
+    public String deleteMappable(@RequestParam("index") int index) {
+        entities.getMappables().remove(index);
+        return "redirect:/";
+    }
+
 }

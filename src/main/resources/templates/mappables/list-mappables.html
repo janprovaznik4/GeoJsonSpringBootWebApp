@@ -22,10 +22,15 @@
     </thead>
 
     <tbody>
-      <tr th:each="mappable : ${entities}">
+      <tr th:each="mappable,iter : ${entities}">
+        <!-- td><input type="hidden" th:field="${iter.index}" /></td -->
         <td th:text="${mappable.shape}" />
         <td th:text="${mappable.name}" />
         <td th:text="${mappable.marker}" />
+
+        <td>
+          <a th:href="@{/delete(index=${iter.index})}" >Delete</a>
+        </td>
       </tr>
     </tbody>
   </table>
