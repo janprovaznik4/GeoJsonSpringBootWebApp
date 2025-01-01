@@ -18,6 +18,7 @@
         <th>Type</th>
         <th>Label</th>
         <th>Marker</th>
+        <th>GeoJSON</th>
       </tr>
     </thead>
 
@@ -27,6 +28,7 @@
         <td th:text="${mappable.shape}" />
         <td th:text="${mappable.name}" />
         <td th:text="${mappable.marker}" />
+        <td th:text="${T(org.example.geo_json_mvc.entities.Mappable).printProperties(mappable)}" />
 
         <td>
           <a th:href="@{/delete(index=${iter.index})}" >Delete</a>

@@ -17,7 +17,9 @@ public interface Mappable {
                 """.formatted(getShape(), getName(), getMarker());
     }
 
-    static void printProperties(Mappable mappable) {
-        System.out.println(JSON_PROPERTY.formatted(mappable.toJSON()));
+    static String printProperties(Mappable mappable) {
+        String printResult = JSON_PROPERTY.formatted(mappable.toJSON());
+        System.out.println(printResult);
+        return printResult;
     }
 }
