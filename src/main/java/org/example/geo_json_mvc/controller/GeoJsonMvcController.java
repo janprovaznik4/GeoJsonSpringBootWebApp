@@ -2,7 +2,6 @@ package org.example.geo_json_mvc.controller;
 
 import org.example.geo_json_mvc.dto.MappableFormPojo;
 import org.example.geo_json_mvc.entities.Building;
-import org.example.geo_json_mvc.entities.Mappable;
 import org.example.geo_json_mvc.entities.UtilityLine;
 import org.example.geo_json_mvc.service.InMemoryMappablesStorage;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,26 +38,58 @@ public class GeoJsonMvcController {
         return "mappables/choose-type-form";
     }
 
+    @GetMapping("/update")
+    public String updateMappable(@RequestParam("index") int index, Model model) {
+        model.addAttribute("mappableTypes", mappableTypes);
+        model.addAttribute("index", index);
+//        if(entities.getMappableById(index) instanceof Building) {
+//            model.addAttribute("concreteMappable", (Building) entities.getMappableById(index));
+//        } else if (entities.getMappableById(index) instanceof UtilityLine) {
+//            model.addAttribute("concreteMappable", (UtilityLine) entities.getMappableById(index));
+//        }
+        model.addAttribute("mappableTypeString", entities.getMappableById(index).getClass().getSimpleName());
+        return "mappables/choose-type-form";
+    }
+
     @GetMapping("/showForm")
     public String showForm(@RequestParam("mappableType") String mappableType, Model model) {
         model.addAttribute("form", new MappableFormPojo(mappableType));
         return "mappables/mappable-form";
     }
 
+    @GetMapping("/updateMappableForm")
+    public String showFormForUpdate(@RequestParam("mappableType") String mappableType, @RequestParam("index") int index, Model model) {
+        MappableFormPojo mappableForUpdate = new MappableFormPojo(mappableType);
+        mappableForUpdate.setConcreteMappable(entities.getMappableById(index), index);
+        //regex removing the type part of the name like " (GOVERNMENT)"
+        mappableForUpdate.setName(entities.getMappableById(index).getName().replaceAll("\\s*\\(.*\\)$", ""));
+        model.addAttribute("form", mappableForUpdate);
+        return "mappables/mappable-form";
+    }
+
     @PostMapping("/save")
     public String saveMappable(@ModelAttribute("form") MappableFormPojo mappableForm) {
-        if ("Building".equals(mappableForm.getType()))
-            entities.getMappables().add(new Building(mappableForm));
-        else if ("UtilityLine".equals(mappableForm.getType()))
-            entities.getMappables().add(new UtilityLine(mappableForm));
-        else
+        if ("Building".equals(mappableForm.getType())) {
+            if (mappableForm.getIndex() == -1) {
+                entities.getMappables().add(new Building(mappableForm));
+            } else {
+                entities.getMappables().set(mappableForm.getIndex(), new Building(mappableForm));
+            }
+        } else if ("UtilityLine".equals(mappableForm.getType())) {
+            if (mappableForm.getIndex() == -1) {
+                entities.getMappables().add(new UtilityLine(mappableForm));
+            } else {
+                entities.getMappables().set(mappableForm.getIndex(), new UtilityLine(mappableForm));
+            }
+        } else {
             throw new IllegalArgumentException("Unknown mappable type: " + mappableForm.getType());
+        }
         return "redirect:/";
     }
 
     @GetMapping("/delete")
     public String deleteMappable(@RequestParam("index") int index) {
-        entities.getMappables().remove(index);
+        entities.deleteMappableById(index);
         return "redirect:/";
     }
 

@@ -17,13 +17,13 @@ public class InMemoryMappablesStorage {
 
     public InMemoryMappablesStorage() {
         mappables = new ArrayList<>();
-//        addMappable(new Building("City Hall", BuildingType.GOVERNMENT));
-//        addMappable(new Building("Public Library", BuildingType.PUBLIC));
-//        addMappable(new Building("Tech Startup Office", BuildingType.PRIVATE));
-//        addMappable(new UtilityLine("Fiber Optic Cable", UtilityType.CABLING));
-//        addMappable(new UtilityLine("Main Water Pipeline", UtilityType.WATER_PIPELINE));
-//        addMappable(new UtilityLine("Natural Gas Pipeline", UtilityType.GAS_PIPELINE));
-//        addMappable(new UtilityLine("Building Ventilation", UtilityType.VENTILATION));
+        addMappable(new Building("City Hall", BuildingType.GOVERNMENT));
+        addMappable(new Building("Public Library", BuildingType.PUBLIC));
+        addMappable(new Building("Tech Startup Office", BuildingType.PRIVATE));
+        addMappable(new UtilityLine("Fiber Optic Cable", UtilityType.CABLING));
+        addMappable(new UtilityLine("Main Water Pipeline", UtilityType.WATER_PIPELINE));
+        addMappable(new UtilityLine("Natural Gas Pipeline", UtilityType.GAS_PIPELINE));
+        addMappable(new UtilityLine("Building Ventilation", UtilityType.VENTILATION));
     }
 
     public List<Mappable> getMappables() {

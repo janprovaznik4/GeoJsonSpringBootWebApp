@@ -2,39 +2,43 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
   <title>List of Mappables</title>
-
-  <!--style>
-      .error {color:red}
-  </style-->
 </head>
+<body class="p-3">
+  <div class="container-fluid">
+    <h3>GeoJSON Generator</h3>
+    <hr class="w-100">
+    <a th:href="@{/chooseMappable}" class="btn btn-primary mb-3">Add Mappable</a>
 
-<body>
-  <a th:href="@{/chooseMappable}">Add Mappable</a>
-
-  <table>
-    <thead>
+    <table class="table table-bordered table-striped">
+      <thead class="table-dark">
       <tr>
         <th>Type</th>
         <th>Label</th>
         <th>Marker</th>
         <th>GeoJSON</th>
+        <th>Action</th>
       </tr>
-    </thead>
+      </thead>
 
-    <tbody>
+      <tbody>
       <tr th:each="mappable,iter : ${entities}">
         <!-- td><input type="hidden" th:field="${iter.index}" /></td -->
         <td th:text="${mappable.shape}" />
-        <td th:text="${mappable.name}" />
-        <td th:text="${mappable.marker}" />
-        <td th:text="${T(org.example.geo_json_mvc.entities.Mappable).printProperties(mappable)}" />
+        <td th:text="${mappable.name}" class="text-nowrap" />
+        <td th:text="${mappable.marker}" class="text-nowrap"/>
+        <td th:text="${T(org.example.geo_json_mvc.entities.Mappable).printProperties(mappable)}" class="text-nowrap"/>
 
-        <td>
-          <a th:href="@{/delete(index=${iter.index})}" >Delete</a>
+        <td class="d-flex gap-2">
+          <a th:href="@{/update(index=${iter.index})}" class="btn btn-info btn-sm">Update</a>
+          <a th:href="@{/delete(index=${iter.index})}" class="btn btn-danger btn-sm">Delete</a>
         </td>
       </tr>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
+
 </body>
 </html>
